@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Real time multi-player games with HTML5</title>
+    <style type="text/css">
+      html , body {
+        background: #212121;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+      //This is all that needs
+      var socket = io.connect(':8080/game');
+        //Now we can listen for that event
+      socket.on( 'onconnected', function( data ) {
+        //Note that the data is the object we sent from the server, as is. So we can assume its id exists.
+        console.log( 'Connected successfully to the socket.io server. My server side ID is ' + data.id );
+      } );
+    </script>
+  </head>
+  <body>
+  <script type="text/javascript">
+    // Flash screen
+    // Menu
+// - t
+    // Options
+// - t
+    // Menu
+// - t
+    // Gameworld
+// - t
+    // Game
+// - t
+    // Options
+// - t
+    // Score screen
+// - t
+    // Gameworld
+
+    action( 'init' );
+    var initial_scenes = filter( 'initial_scenes', [
+      'flash',
+      'menu',
+      'options',
+      'multiplayer',
+      'game-world',
+      'game-battle',
+      'game-options',
+      'game-scores',
+    ] );
+    for ( var x in initial_scenes ) {
+      var scene  = initial_scenes[x];
+      spawn.scene( scene );
+    }
+    scenes.goto( filter( 'start_scene', 'flash' ) );
+
+  </script>
+    <div id="game-wrapper"> </div>
+  </body>
+</html>
