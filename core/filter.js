@@ -5,7 +5,9 @@
    * Filter
    */
   w.filter = function() {
-    var args = arguments;
+    var x, args = [];
+    for ( x in arguments )
+      args.push( arguments[x] );
 
     // No hook is set
     if ( !args[0] )
@@ -14,13 +16,13 @@
     if ( _f[hook] ) {
       for ( var priority in _f[hook] ) {
         var callbacks = _f[hook][priority];
-        for ( var x in callbacks ) {
-          args[1] = callbacks[x].apply( args );
+        for ( x in callbacks ) {
+          args[0] = callbacks[x].apply( args );
         }
       }
     }
 
-    return args[1];
+    return args[0];
   };
 
   /**

@@ -1,5 +1,5 @@
-( function( multiplayer ) {
-  multiplayer = {
+( function( _s ) {
+  _s['game-battle'] = {
     spawn : function() {
       html = '';
       html += '<h1>Game battle</h1>';
@@ -15,12 +15,11 @@
         html += '<div class="bar-vertical bar--mana"></div>';
         html += '<div class=bar--action-queue></div>';
         html += '<div class=bar--actions>';
-          html += '<div class="action action--heal">';
-          html += '<div class="action action--defend">';
-          html += '<div class="action action--attack">';
-          html += '<div class="action action--magic">';
+          html += '<div class="action action--heal"></div>';
+          html += '<div class="action action--defend"></div>';
+          html += '<div class="action action--attack"></div>';
+          html += '<div class="action action--magic"></div>';
         html += '</div>';
-        html += '<div class=squad-manager></div>';
         html += '<div class=squad-manager>squad-manager</div>';
         html += '<div class=flee-button></div>';
       html += '</div>';
@@ -31,4 +30,4 @@
       console.log( 'Start the game' );
     }
   };
-} ( game.asset.scene.multiplayer ) );
+} ( game.asset.scene ) );

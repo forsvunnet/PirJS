@@ -9,8 +9,67 @@
         margin: 0;
         padding: 0;
       }
+      h1 {
+        margin: 0;
+        padding: 1em;
+        font-size: 1em;
+        background: #333;
+      }
+      .battle-window {
+        width: 320px;
+        height: 480px;
+        background: #FFFF99;
+        position: relative;
+      }
+      .bar--top {
+        height: 25px;
+        background: white;
+        border-bottom: 1px solid brown;
+      }
+      .bar-vertical {
+        height: 145px;
+        width: 25px;
+        position: absolute;
+        background: brown;
+        top: 25px;
+      }
+      .bar--life { left: 0; }
+      .bar--mana { right: 0; }
+      .bar--action-queue {
+        top: 170px;
+        position: absolute;
+        height: 25px;
+        background: brown;
+        width: 100%;
+      }
+      .bar--actions {
+        top: 195px;
+        position: absolute;
+        height: 80px;
+        border-bottom: 1px solid brown;
+        width: 100%;
+      }
+      .action {
+        width: 25%;
+        height: 100%;
+        float: left;
+      }
+      .action:not(:last-child) {
+        width: calc( 25% - 1px );
+        border-right: 1px solid brown;
+      }
+      .squad-manager {
+        width: 100%;
+        position: absolute;
+        top: 275px;
+        height: 205px;
+        background: white;
+      }
+
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/client.js"></script>
     <script type="text/javascript">
       //This is all that needs
       var socket = io.connect(':8080/game');
@@ -39,23 +98,28 @@
     // Score screen
 // - t
     // Gameworld
+    var start_game = setInterval( function() {
+      if ( 'undefined' === typeof action )
+        return;
+      clearInterval( start_game );
 
-    action( 'init' );
-    var initial_scenes = filter( 'initial_scenes', [
-      'flash',
-      'menu',
-      'options',
-      'multiplayer',
-      'game-world',
-      'game-battle',
-      'game-options',
-      'game-scores',
-    ] );
-    for ( var x in initial_scenes ) {
-      var scene  = initial_scenes[x];
-      spawn.scene( scene );
-    }
-    scenes.goto( filter( 'start_scene', 'flash' ) );
+      action( 'init' );
+      var initial_scenes = filter( 'initial_scenes', [
+        'flash',
+        'menu',
+        'options',
+        'multiplayer',
+        'game-world',
+        'game-battle',
+        'game-options',
+        'game-scores',
+      ] );
+      for ( var x in initial_scenes ) {
+        var _s  = initial_scenes[x];
+        spawn.scene( _s );
+      }
+      scene.goto( filter( 'start_scene', 'flash' ) );
+    }, 250 );
 
   </script>
     <div id="game-wrapper"> </div>

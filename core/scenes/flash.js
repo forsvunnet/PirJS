@@ -1,5 +1,5 @@
-( function( flash ) {
-  flash = {
+( function( _s ) {
+  _s.flash = {
     spawn : function() {
       return '<h1>Pir</h1>';
     },
@@ -11,4 +11,5 @@
       }, 1000 );
     }
   };
-} ( game.asset.scene.flash ) );
+
+} ( game.asset.scene ) );

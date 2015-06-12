@@ -1,0 +1,11 @@
+[
+  "core/filter.js",
+  "core/utility.js",
+  "core/game.js",
+  "core/scene.js",
+  "core/spawn.js",
+  "core/scenes/flash.js",
+  "core/scenes/menu.js",
+  "core/scenes/multiplayer.js",
+  "core/scenes/game-battle.js"
+]

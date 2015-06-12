@@ -1,5 +1,5 @@
-( function( menu ) {
-  menu = {
+( function( _s ) {
+  _s.menu = {
     spawn : function() {
       return '<h1>Menu</h1>';
     },
@@ -10,4 +10,4 @@
       }, 500 );
     }
   };
-} ( game.asset.scene.menu ) );
+} ( game.asset.scene ) );
