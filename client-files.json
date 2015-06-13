@@ -1,4 +1,5 @@
 [
+  "core/network.js",
   "core/filter.js",
   "core/utility.js",
   "core/game.js",

@@ -45,7 +45,7 @@ scene.display_only = function( _s ) {
   // - Used by transitions
   var callback = filter( 'scene-display-callback', _s.display, _s );
   if ( 'function' === typeof callback )
-    callback.call( _s );
+    callback( _s );
 
   // Hide all other scenes
   for ( var x in game.scenes ) {

@@ -12,8 +12,7 @@ spawn.scene = function( scene_name ) {
     return false;
   }
   asset = filter( 'spawn-scene-asset', asset );
-  console.log( asset );
-  console.log( game.asset.scene );
+
   // Spawn the HTML for the scene
   var html = filter( 'spawn-scene-html', asset.spawn() );
 

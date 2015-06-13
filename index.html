@@ -34,7 +34,19 @@
         top: 25px;
       }
       .bar--life { left: 0; }
+      .bar--life .filler { background: green }
       .bar--mana { right: 0; }
+      .bar--mana .filler { background: blue }
+      .filler {
+        width: 100%;
+        height: 80%;
+        position: absolute;
+        bottom: 0;
+        transition: height 1s;
+      }
+      .filler:hover {
+        height: 50%;
+      }
       .bar--action-queue {
         top: 170px;
         position: absolute;
@@ -42,22 +54,45 @@
         background: brown;
         width: 100%;
       }
+      .queue-item {
+        width: 19px;
+        height: 25px;
+        border-right: 1px solid #FF9;
+        float: left;
+      }
+      .queue-item-15 {
+        border-right: 0;
+      }
+      .queue-action--defend { background-color: blue; }
+      .queue-action--magic { background-color: orange; }
+      .queue-action--attack { background-color: red; }
+      .queue-action--heal { background-color: green; }
+      .queue-action--hidden { background-color: yellow; }
       .bar--actions {
         top: 195px;
         position: absolute;
-        height: 80px;
+        height: 78px;
         border-bottom: 1px solid brown;
         width: 100%;
       }
       .action {
-        width: 25%;
+        width: calc( 25% - 1px );
         height: 100%;
         float: left;
+
+        cursor: pointer;
+        transition: background-color 0.2s;
       }
       .action:not(:last-child) {
-        width: calc( 25% - 1px );
         border-right: 1px solid brown;
       }
+      .action:hover {
+        background-color: rgba( 255,255,255,0.5 );
+      }
+      .action--defend { background-color: blue; }
+      .action--magic { background-color: orange; }
+      .action--attack { background-color: red; }
+      .action--heal { background-color: green; }
       .squad-manager {
         width: 100%;
         position: absolute;
@@ -65,20 +100,21 @@
         height: 205px;
         background: white;
       }
+      .unit-window {
+        width: 62px;
+        height: 62px;
+        border: 1px solid brown;
+        float: left;
+        transition: background-color 0.2s;
+      }
+      .unit-window:hover{
+        background-color: #EEE;
+      }
 
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="/client.js"></script>
-    <script type="text/javascript">
-      //This is all that needs
-      var socket = io.connect(':8080/game');
-        //Now we can listen for that event
-      socket.on( 'onconnected', function( data ) {
-        //Note that the data is the object we sent from the server, as is. So we can assume its id exists.
-        console.log( 'Connected successfully to the socket.io server. My server side ID is ' + data.id );
-      } );
-    </script>
   </head>
   <body>
   <script type="text/javascript">
@@ -119,7 +155,8 @@
         spawn.scene( _s );
       }
       scene.goto( filter( 'start_scene', 'flash' ) );
-    }, 250 );
+
+    }, 2500 );
 
   </script>
     <div id="game-wrapper"> </div>
