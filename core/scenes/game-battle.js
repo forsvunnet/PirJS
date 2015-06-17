@@ -42,6 +42,7 @@
 
       // Wait for all players to connect
       var state = 'pending';
+      var allow_battle = false;
 
       // Helper function to set state
       var set_state = function( _s ) {
@@ -54,7 +55,19 @@
           bw.find( '.title' ).text( 'Waiting for another player..' );
         }
         else if ( 'battle' == _s ) {
+          allow_battle = true;
           bw.find( '.title' ).text( 'Commence battle!' );
+        }
+        else if ( 'done' == _s ) {
+          allow_battle = false;
+          bw.find( '.title' ).text( 'Awaiting opponents actions..' );
+        }
+        else if ( 'done-opponent' == _s ) {
+          bw.find( '.title' ).text( 'Opponent is wating for you..' );
+        }
+        else if ( 'clash' == _s ) {
+          allow_battle = false;
+          bw.find( '.title' ).text( 'Clash!' );
         }
         bw.addClass( 'state-' + _s );
       };
@@ -89,7 +102,7 @@
           return;
 
         // Only battle when battle is available
-        if ( 'battle' != state )
+        if ( !allow_battle )
           return;
 
         // Get the slot to fill
@@ -108,33 +121,50 @@
         // Send the action to server
         _n.queue( _a );
 
+        if ( 0 === available_slots ) {
+          if ( 'done-opponent' === state ) {
+            set_state( 'clash' );
+          }
+          else {
+            set_state( 'done' );
+          }
+        }
       };
       // Bind the action buttons
       bw.find( '.action' ).click( take_action );
 
-      // Handle oponent actions
-      var oponent_slots = 8;
-      var oponent_action = function( e, data ) {
+      // Handle opponent actions
+      var opponent_slots = 8;
+      var opponent_action = function( e, data ) {
         console.log( data );
         // Get the slot to fill
-        var slot = filter( 'slot', 7 + oponent_slots );
-        oponent_slots--;
+        var slot = filter( 'slot', 7 + opponent_slots );
+        opponent_slots--;
 
         // Get the slot item
         var slot_item = bw.find( '.queue-item-' + slot );
 
         // Colour the slot in
         slot_item.addClass( 'queue-action--hidden' );
+
+        if ( 0 === opponent_slots ) {
+          if ( 'done' === state ) {
+            set_state( 'clash' );
+          }
+          else {
+            set_state( 'done-opponent' );
+          }
+        }
       };
-      bw.on( 'player-action', oponent_action );
+      bw.on( 'player-action', opponent_action );
 
       /**
        * Player joined
        */
       var player_joined = function( e, data ) {
-        console.log( e );
-        console.log( data );
+        // Wait for players to join before starting battle
         if ( data.room.full ) {
+          console.log( 'Start battle' );
           set_state( 'battle' );
         }
       };
