@@ -1,0 +1,62 @@
+/* actions.scss */
+
+.bar--action-queue {
+  top: 170px;
+  position: absolute;
+  height: 25px;
+  background-color: $game;
+  width: 100%;
+  border-top: 1px solid darken($page, 5%);
+}
+
+.queue-item {
+  width: 20px;
+  height: 25px;
+  border-right: 1px solid darken($game, 10%);
+  float: left;
+
+  &-15 {
+    border-right: 0;
+  }
+}
+
+// Actions that are queued up
+.queue-action{
+  &--defend { background-color: $defend; }
+  &--magic {  background-color: $magic; }
+  &--attack { background-color: $attack; }
+  &--heal {   background-color: $heal; }
+  &--hidden { background-color: $hidden; }
+}
+
+.bar--actions {
+  top: 195px;
+  position: absolute;
+  height: 80px;
+  border-top: 1px solid darken($page, 5%);
+  border-bottom: 1px solid $black;
+  width: 100%;
+}
+
+// Actions!!
+.action {
+  width: 25%;
+  height: 100%;
+  float: left;
+
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  // Everything other than the last child
+  &:not(:last-child) {
+    border-right: 1px solid $black;
+  }
+  // Hovering changing this
+  
+
+  // Style the actions 
+  &--defend { background-color: $defend; &:hover { background-color: darken($defend, 10%); }}
+  &--magic {  background-color: $magic;  &:hover { background-color: darken($magic, 10%); }}
+  &--attack { background-color: $attack; &:hover { background-color: darken($attack, 10%); }}
+  &--heal {   background-color: $heal;   &:hover { background-color: darken($heal, 10%); }}
+}

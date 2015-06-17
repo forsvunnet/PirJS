@@ -1,0 +1,108 @@
+// Units
+
+.squad-manager {
+  width: 100%;
+  position: absolute;
+  top: 275px;
+  height: 205px;
+  background-color: $game;
+  padding-left: 20px;
+  overflow: hidden;
+}
+
+.unit-window {
+  width: 51px;
+  height: 51px;
+
+  border-right: 1px solid darken($game, 10%);
+  border-bottom: 1px solid darken($game, 10%);
+
+  float: left;
+  transition: background-color 0.2s;
+
+  // Center Align each unit without any margins
+  // This doesn't work in older browsers though.
+  // Is it worth using CSS3 things over older techniques
+  // to allow older browsers to use it?
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover{ background-color: darken($game, 10%);}
+
+  & + & + & + & + & {
+  	  border-top: 1px solid darken($game, 10%);
+  }
+
+  &:nth-of-type(4n+1) {
+    clear: left;
+  }
+}
+
+// Those little men things
+.unit {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  position: relative;
+  border: 2px solid $black;
+
+  // Style the units
+  &-attacker {  border-color: $attack; }
+  &-defender {  border-color: $defend; }
+  &-healer {    border-color: $heal; }
+}
+
+.bar-health {
+  height: 3px;
+  width: 25px;
+  position: absolute;
+  top: -8px;
+  left: -3px;
+  background-color: $death;
+  
+  .life {
+    height: 100%;
+    background-color: $life;
+  }
+}
+
+
+// Diagonals experimentation
+// =========================
+
+$degree: 40deg;
+
+.unit-window { 
+	transform: rotate($degree);
+	width: 50px;
+	height: 65px;
+	position: relative;
+	border: 1px solid $black;
+	margin: -1px 14px -13px 0px;
+
+
+	left: 40px;
+	// This is clever and ugly and pretty at the same time.
+	& + & + & + & + &{ left: -1px; top: -2px; } // second row
+	& + & + & + & + & + & + & + & + &{ left: 22px; top: -4px; } // third row
+	& + & + & + & + & + & + & + & + & + & + & + & + &{   left: -19px; top: -6px; } // last row
+}
+
+// Reverse the rotation
+.unit { transform: rotate(-#{$degree});}
+
+.flee-button{
+	background-color: $magic;
+	height: 160px;
+	width: 102px;
+	display: block;
+	position: absolute;
+	right: -45px;
+	bottom: -58px;
+  transform: rotate($degree);
+
+	.exit{
+		transform: rotate(-#{$degree});
+	}
+}

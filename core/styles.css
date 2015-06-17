@@ -1,94 +1,100 @@
 /* styles.css */
-* {
-  box-sizing: border-box; }
-
-html, body {
-  background: #212121;
-  color: #fff;
-  margin: 0;
-  padding: 0; }
-
+/* Typography */
+@font-face {
+  font-family: 'sf';
+  src: url("sf.eot");
+  src: url("sf.eot?#iefix") format("embedded-opentype"), url("sf.woff2") format("woff2"), url("sf.woff") format("woff"), url("sf.ttf") format("truetype"), url("sf.svg#sfthin") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
 h1 {
+  font-family: "sf", sans-serif;
   margin: 0;
   padding: 1em;
-  font-size: 1em;
-  background: #333; }
+  font-size: 1rem;
+  background: #273131;
+  text-align: center;
+}
 
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  background-color: #1c2323;
+  color: white;
+  font-family: "sf", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* UI elements */
 .title {
-  color: black; }
+  color: black;
+}
+
+.bar--top {
+  height: 25px;
+  background-color: white;
+  border-bottom: 1px solid #1c2323;
+  width: 320px;
+  margin: auto;
+}
 
 .battle-window {
   width: 320px;
   height: 480px;
-  background: #FFFF99;
-  position: relative; }
+  background: #273131;
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
+  box-shadow: 0 4px 4px #101515;
+}
 
-.bar--top {
-  height: 25px;
-  background: white;
-  border-bottom: 1px solid brown; }
-
-.bar-vertical {
-  height: 145px;
-  width: 25px;
-  position: absolute;
-  background: brown;
-  top: 25px; }
-
-.bar--life {
-  left: 0; }
-
-.bar--life .filler {
-  background: green; }
-
-.bar--mana {
-  right: 0; }
-
-.bar--mana .filler {
-  background: blue; }
-
-.filler {
-  width: 100%;
-  height: 80%;
-  position: absolute;
-  bottom: 0;
-  -webkit-transition: height 1s;
-          transition: height 1s; }
-  .filler:hover {
-    height: 50%; }
-
+/* actions.scss */
 .bar--action-queue {
   top: 170px;
   position: absolute;
   height: 25px;
-  background: brown;
-  width: 100%; }
+  background-color: #273131;
+  width: 100%;
+  border-top: 1px solid #1c2323;
+}
 
 .queue-item {
   width: 20px;
   height: 25px;
-  border-right: 1px solid #FF9;
-  float: left; }
-  .queue-item-15 {
-    border-right: 0; }
+  border-right: 1px solid #101515;
+  float: left;
+}
+.queue-item-15 {
+  border-right: 0;
+}
 
 .queue-action--defend {
-  background-color: blue; }
+  background-color: #54c0d6;
+}
 .queue-action--magic {
-  background-color: orange; }
+  background-color: #fec356;
+}
 .queue-action--attack {
-  background-color: red; }
+  background-color: #ef5227;
+}
 .queue-action--heal {
-  background-color: green; }
+  background-color: #b371a2;
+}
 .queue-action--hidden {
-  background-color: yellow; }
+  background-color: #efed69;
+}
 
 .bar--actions {
   top: 195px;
   position: absolute;
   height: 80px;
-  border-bottom: 1px solid brown;
-  width: 100%; }
+  border-top: 1px solid #1c2323;
+  border-bottom: 1px solid black;
+  width: 100%;
+}
 
 .action {
   width: 25%;
@@ -96,32 +102,51 @@ h1 {
   float: left;
   cursor: pointer;
   -webkit-transition: background-color 0.2s;
-          transition: background-color 0.2s; }
-  .action:not(:last-child) {
-    border-right: 1px solid brown; }
-  .action:hover {
-    background-color: rgba(255, 255, 255, 0.5); }
-  .action--defend {
-    background-color: blue; }
-  .action--magic {
-    background-color: orange; }
-  .action--attack {
-    background-color: red; }
-  .action--heal {
-    background-color: green; }
+          transition: background-color 0.2s;
+}
+.action:not(:last-child) {
+  border-right: 1px solid black;
+}
+.action--defend {
+  background-color: #54c0d6;
+}
+.action--defend:hover {
+  background-color: #30aec7;
+}
+.action--magic {
+  background-color: #fec356;
+}
+.action--magic:hover {
+  background-color: #feb123;
+}
+.action--attack {
+  background-color: #ef5227;
+}
+.action--attack:hover {
+  background-color: #d33a10;
+}
+.action--heal {
+  background-color: #b371a2;
+}
+.action--heal:hover {
+  background-color: #9d548a;
+}
 
 .squad-manager {
   width: 100%;
   position: absolute;
   top: 275px;
   height: 205px;
-  background: white;
-  padding-left: 56px; }
+  background-color: #273131;
+  padding-left: 20px;
+  overflow: hidden;
+}
 
 .unit-window {
   width: 51px;
   height: 51px;
-  border: 1px solid brown;
+  border-right: 1px solid #101515;
+  border-bottom: 1px solid #101515;
   float: left;
   -webkit-transition: background-color 0.2s;
           transition: background-color 0.2s;
@@ -136,24 +161,34 @@ h1 {
   -webkit-box-pack: center;
   -webkit-justify-content: center;
       -ms-flex-pack: center;
-          justify-content: center; }
-  .unit-window:hover {
-    background-color: #999; }
-  .unit-window:nth-of-type(4n+1) {
-    clear: left; }
+          justify-content: center;
+}
+.unit-window:hover {
+  background-color: #101515;
+}
+.unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
+  border-top: 1px solid #101515;
+}
+.unit-window:nth-of-type(4n+1) {
+  clear: left;
+}
 
 .unit {
   width: 20px;
   height: 20px;
   border-radius: 100%;
-  border: 1px solid black;
-  position: relative; }
-  .unit-attacker {
-    border-color: red; }
-  .unit-defender {
-    border-color: blue; }
-  .unit-healer {
-    border-color: green; }
+  position: relative;
+  border: 2px solid black;
+}
+.unit-attacker {
+  border-color: #ef5227;
+}
+.unit-defender {
+  border-color: #54c0d6;
+}
+.unit-healer {
+  border-color: #b371a2;
+}
 
 .bar-health {
   height: 3px;
@@ -161,7 +196,97 @@ h1 {
   position: absolute;
   top: -8px;
   left: -3px;
-  background-color: red; }
-  .bar-health .life {
-    height: 100%;
-    background-color: green; }
+  background-color: #a32222;
+}
+.bar-health .life {
+  height: 100%;
+  background-color: #afe187;
+}
+
+.unit-window {
+  -webkit-transform: rotate(40deg);
+      -ms-transform: rotate(40deg);
+          transform: rotate(40deg);
+  width: 50px;
+  height: 65px;
+  position: relative;
+  border: 1px solid black;
+  margin: -1px 14px -13px 0px;
+  left: 40px;
+}
+.unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
+  left: -1px;
+  top: -2px;
+}
+.unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
+  left: 22px;
+  top: -4px;
+}
+.unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
+  left: -19px;
+  top: -6px;
+}
+
+.unit {
+  -webkit-transform: rotate(-40deg);
+      -ms-transform: rotate(-40deg);
+          transform: rotate(-40deg);
+}
+
+.flee-button {
+  background-color: #fec356;
+  height: 160px;
+  width: 102px;
+  display: block;
+  position: absolute;
+  right: -45px;
+  bottom: -58px;
+  -webkit-transform: rotate(40deg);
+      -ms-transform: rotate(40deg);
+          transform: rotate(40deg);
+}
+.flee-button .exit {
+  -webkit-transform: rotate(-40deg);
+      -ms-transform: rotate(-40deg);
+          transform: rotate(-40deg);
+}
+
+/* Health & Magic UI */
+.bar-vertical {
+  height: 145px;
+  width: 25px;
+  top: 25px;
+  position: absolute;
+  background-color: #3e4d4d;
+}
+
+.bar--life {
+  left: 0;
+}
+.bar--life .filler {
+  background-color: #afe187;
+  background-color: #afe187;
+  background-image: -webkit-linear-gradient(#afe187, #567f34);
+  background-image: linear-gradient(#afe187, #567f34);
+}
+.bar--mana {
+  right: 0;
+}
+.bar--mana .filler {
+  background-color: #421fd7;
+  background-color: #421fd7;
+  background-image: -webkit-linear-gradient(#421fd7, #210f6b);
+  background-image: linear-gradient(#421fd7, #210f6b);
+}
+
+.filler {
+  width: 100%;
+  height: 80%;
+  position: absolute;
+  bottom: 0;
+  -webkit-transition: height 1s;
+          transition: height 1s;
+}
+.filler:hover {
+  height: 50%;
+}

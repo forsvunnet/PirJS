@@ -1,0 +1,48 @@
+/* Health & Magic UI */
+
+@import 'bourbon'; // import some nice mixins, without included the whole library.
+
+.bar-vertical {
+  height: 145px;
+  width: 25px;
+  top: 25px;
+  position: absolute;
+  background-color: lighten($game, 10%);
+ }
+
+// Life and Magic bars, left and right of the game
+.bar{
+  &--life { 
+    left: 0; 
+
+    // Fill the Life bar
+    .filler {
+      background-color: $life; 
+			@include linear-gradient($life, shade(saturate($life, 50%), 50%));
+
+    }
+  }
+
+  &--mana { 
+    right: 0;
+
+    // Fill the Mana bar
+    .filler { 
+      background-color: $mana;
+			@include linear-gradient($mana, shade($mana, 50%));
+
+    }
+  }
+}
+
+.filler {
+  width: 100%;
+  height: 80%;
+  position: absolute;
+  bottom: 0;
+  transition: height 1s;
+ 
+  &:hover {
+    height: 50%;
+  }
+}

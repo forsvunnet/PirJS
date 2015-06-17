@@ -1,0 +1,23 @@
+/* UI elements */
+
+.title{
+  color: $black;
+}
+
+.bar--top {
+  height: 25px;
+  background-color: $white;
+  border-bottom: 1px solid darken($page, 5%);
+  width: 320px;
+  margin: auto;
+}
+
+.battle-window {
+  width: 320px;
+  height: 480px;
+  background: $game;
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
+  box-shadow: 0 4px 4px darken($page, 10%);
+}

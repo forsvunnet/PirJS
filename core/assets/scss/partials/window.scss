@@ -1,0 +1,9 @@
+* { box-sizing: border-box; }
+
+html , body {
+  background-color: darken($page, 5%);
+  color: $white;
+  font-family: $font;
+  margin: 0;
+  padding: 0;
+}

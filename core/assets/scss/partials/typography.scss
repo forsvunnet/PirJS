@@ -1,0 +1,25 @@
+/* Typography */
+
+@font-face {
+    font-family: 'sf';
+    src: url('sf.eot');
+    src: url('sf.eot?#iefix') format('embedded-opentype'),
+         url('sf.woff2') format('woff2'),
+         url('sf.woff') format('woff'),
+         url('sf.ttf') format('truetype'),
+         url('sf.svg#sfthin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+$font: 'sf', sans-serif;
+
+
+h1 {
+  font-family: $font;
+  margin: 0;
+  padding: 1em;
+  font-size: 1rem;
+  background: $game;
+  text-align: center;
+}
