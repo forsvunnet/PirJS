@@ -26,7 +26,7 @@
           html += '<div data-action=magic class="action action--magic"></div>';
         html += '</div>';
         html += '<div class=squad-manager>';
-        for ( i = 0; i < 10; i++ ) {
+        for ( i = 0; i < 16; i++ ) {
           html += '<div class="unit-window unit-window-'+ i +'">';
 
           html += '</div>';
@@ -40,6 +40,7 @@
 
       var state = 'pending';
 
+      // Go directly to battle for now
       state = 'battle';
 
       // Get the window
@@ -61,7 +62,13 @@
 
       // Do some interesting stuffs here
       console.log( 'Start the game' );
+
+      /**
+       * Slots and actions
+       */
       var available_slots = 8;
+
+      //
       var take_action = function( e ) {
         if ( 0 >= available_slots )
           return;
@@ -87,9 +94,10 @@
         network.queue( bw_id, _a );
 
       };
-
+      // Bind the action buttons
       bw.find( '.action' ).click( take_action );
 
+      // Handle oponent actions
       var oponent_slots = 8;
       var oponent_action = function() {
         // Get the slot to fill
@@ -103,6 +111,37 @@
         slot_item.addClass( 'queue-action--hidden' );
       };
       bw.on( 'player-action', oponent_action );
+
+      /**
+       * Units
+       */
+      // Populate squad manager
+      var units = [];
+
+      units.push( spawn.unit( 'defender' ) );
+      units.push( spawn.unit( 'attacker' ) );
+      units.push( spawn.unit( 'attacker' ) );
+      units.push( spawn.unit( 'defender' ) );
+
+      units.push( spawn.unit( 'defender' ) );
+      units.push( spawn.unit( 'attacker', 2 ) );
+      units.push( spawn.unit( 'attacker', 2 ) );
+      units.push( spawn.unit( 'defender' ) );
+
+      units.push( spawn.unit( 'attacker', 3 ) );
+      units.push( spawn.unit( 'attacker', 2 ) );
+      units.push( spawn.unit( 'attacker', 2 ) );
+      units.push( spawn.unit( 'attacker', 3 ) );
+
+      units.push( spawn.unit( 'attacker', 3 ) );
+      units.push( spawn.unit( 'healer' ) );
+      units.push( spawn.unit( 'healer' ) );
+      units.push( spawn.unit( 'attacker', 3 ) );
+
+      for ( var i = 0; i < units.length; i++ ) {
+        var unit = units[i];
+        bw.find( '.unit-window-'+ i ).append( unit.element );
+      }
     }
   };
 } ( game.asset.scene ) );

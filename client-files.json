@@ -8,5 +8,9 @@
   "core/scenes/flash.js",
   "core/scenes/menu.js",
   "core/scenes/multiplayer.js",
-  "core/scenes/game-battle.js"
+  "core/scenes/game-battle.js",
+  "core/unit.js",
+  "core/units/attacker.js",
+  "core/units/defender.js",
+  "core/units/healer.js"
 ]
