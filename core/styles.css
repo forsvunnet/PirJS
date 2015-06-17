@@ -71,6 +71,31 @@ html, body {
   border-right: 0;
 }
 
+@-webkit-keyframes enemy {
+  from {
+    -webkit-transform: scale(1.2);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
+}
+@keyframes enemy {
+  from {
+    -webkit-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+  to {
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
+  }
+}
+.queue-action--defend, .queue-action--magic, .queue-action--attack, .queue-action--heal, .queue-action--hidden {
+  -webkit-animation: enemy 0.14s ease-in;
+  animation: enemy 0.14s ease-in;
+}
+
 .queue-action--defend {
   background-color: #54c0d6;
 }
@@ -84,7 +109,7 @@ html, body {
   background-color: #b371a2;
 }
 .queue-action--hidden {
-  background-color: #efed69;
+  background-color: #556a8f;
 }
 
 .bar--actions {
@@ -182,20 +207,23 @@ html, body {
 }
 .unit-attacker {
   border-color: #ef5227;
+  background-color: #bf411f;
 }
 .unit-defender {
   border-color: #54c0d6;
+  background-color: #4399ab;
 }
 .unit-healer {
   border-color: #b371a2;
+  background-color: #8f5a81;
 }
 
 .bar-health {
-  height: 3px;
-  width: 25px;
+  height: 4px;
+  width: 26px;
   position: absolute;
-  top: -8px;
-  left: -3px;
+  top: 12px;
+  left: -5px;
   background-color: #a32222;
 }
 .bar-health .life {

@@ -20,14 +20,25 @@
   }
 }
 
+@include keyframes(enemy) {
+  from { @include transform(scale(1.2)); }
+  to { @include transform(scale(1));}
+}
+
+%enemyAnimation{ @include animation(enemy 0.14s ease-in); }
+
 // Actions that are queued up
 .queue-action{
-  &--defend { background-color: $defend; }
-  &--magic {  background-color: $magic; }
-  &--attack { background-color: $attack; }
-  &--heal {   background-color: $heal; }
-  &--hidden { background-color: $hidden; }
+  &--defend { background-color: $defend; @extend %enemyAnimation; }
+  &--magic {  background-color: $magic;  @extend %enemyAnimation; }
+  &--attack { background-color: $attack; @extend %enemyAnimation; }
+  &--heal {   background-color: $heal;   @extend %enemyAnimation; }
+
+  // When the opposition attachs, this shows
+  &--hidden { background-color: $hidden; @extend %enemyAnimation; }
 }
+
+
 
 .bar--actions {
   top: 195px;
