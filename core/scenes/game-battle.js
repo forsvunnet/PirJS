@@ -6,24 +6,24 @@
       html += '<h1>Game battle</h1>';
       html += '<div class=battle-window id=bw-'+ bw_id +' data-id='+ bw_id +'>';
         html += '<div class=bar--top>';
-          html += '<div class=bar--exp></div>';
-          html += '<div class=info--attack-power></div>';
-          html += '<div class=info--squad-count></div>';
-          html += '<div class=info--gold></div>';
+          html += '<div class=bar--exp title="Experience"></div>';
+          html += '<div class=info--attack-power title="Attack Power"></div>';
+          html += '<div class=info--squad-count title="Squad Count"></div>';
+          html += '<div class=info--gold  title="Gold?"</div>';
         html += '</div>';
         html += '<div>battle-screen</div>';
-        html += '<div class="bar-vertical bar--life"><div class=filler></div></div>';
-        html += '<div class="bar-vertical bar--mana"><div class=filler></div></div>';
+        html += '<div class="bar-vertical bar--life" title="Life"><div class=filler></div></div>';
+        html += '<div class="bar-vertical bar--mana" title="Mana"><div class=filler></div></div>';
         html += '<div class=bar--action-queue>';
         for ( i = 0; i < 16; i++ ) {
           html += '<div class="queue-item queue-item-'+ i +'"></div>';
         }
         html += '</div>';
         html += '<div class=bar--actions>';
-          html += '<div data-action=heal class="action action--heal"></div>';
-          html += '<div data-action=defend class="action action--defend"></div>';
-          html += '<div data-action=attack class="action action--attack"></div>';
-          html += '<div data-action=magic class="action action--magic"></div>';
+          html += '<div data-action=heal class="action action--heal" title="Heal"></div>';
+          html += '<div data-action=defend class="action action--defend" title="Defend"></div>';
+          html += '<div data-action=attack class="action action--attack" title="Attack"></div>';
+          html += '<div data-action=magic class="action action--magic" title="Magic"></div>';
         html += '</div>';
         html += '<div class=squad-manager>';
         for ( i = 0; i < 16; i++ ) {
@@ -32,7 +32,7 @@
           html += '</div>';
         }
         html += '</div>';
-        html += '<div class=flee-button></div>';
+        html += '<div class=flee-button title="Flee Battle"></div>';
       html += '</div>';
       return html;
     },
