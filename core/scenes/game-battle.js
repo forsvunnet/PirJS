@@ -11,10 +11,7 @@
           html += '<div class=info--squad-count title="Squad Count"></div>';
           html += '<div class=info--gold  title="Gold?"</div>';
         html += '</div>';
-<<<<<<< HEAD
         html += '<div class="title">battle-screen</div>';
-=======
->>>>>>> c4fe33d3505489ab7ed7a8dea9e5d687dbd1b6ea
         html += '<div class="bar-vertical bar--life" title="Life"><div class=filler></div></div>';
         html += '<div class="bar-vertical bar--mana" title="Mana"><div class=filler></div></div>';
         html += '<div class=bar--action-queue>';
