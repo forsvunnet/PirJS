@@ -19,6 +19,7 @@
 
   float: left;
   transition: background-color 0.2s;
+  cursor: move;
 
   // Center Align each unit without any margins
   // This doesn't work in older browsers though.
@@ -78,7 +79,8 @@ $degree: 40deg;
 	width: 50px;
 	height: 65px;
 	position: relative;
-	border: 1px solid $black;
+	border: 1px solid darken($game, 3%);
+
 	margin: -1px 14px -13px 0px;
 
 
