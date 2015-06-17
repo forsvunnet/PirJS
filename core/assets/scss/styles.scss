@@ -1,0 +1,188 @@
+/* styles.css */
+* {
+  box-sizing: border-box;
+}
+html , body {
+  background: #212121;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 0;
+  padding: 1em;
+  font-size: 1em;
+  background: #333;
+}
+
+.title{
+  color: black;
+}
+
+.battle-window {
+  width: 320px;
+  height: 480px;
+  background: #FFFF99;
+  position: relative;
+}
+
+.bar--top {
+  height: 25px;
+  background: white;
+  border-bottom: 1px solid brown;
+}
+
+.bar-vertical {
+  height: 145px;
+  width: 25px;
+  position: absolute;
+  background: brown;
+  top: 25px;
+}
+
+.bar--life { left: 0; }
+.bar--life .filler { background: green }
+.bar--mana { right: 0; }
+.bar--mana .filler { background: blue }
+
+.filler {
+  width: 100%;
+  height: 80%;
+  position: absolute;
+  bottom: 0;
+  transition: height 1s;
+ 
+  &:hover {
+    height: 50%;
+  }
+}
+
+.bar--action-queue {
+  top: 170px;
+  position: absolute;
+  height: 25px;
+  background: brown;
+  width: 100%;
+}
+
+.queue-item {
+  width: 20px;
+  height: 25px;
+  border-right: 1px solid #FF9;
+  float: left;
+
+  &-15 {
+    border-right: 0;
+  }
+}
+
+// Colours for actions
+$defend: blue;
+$magic: orange;
+$attack: red;
+$heal: green;
+$hidden: yellow;
+
+.queue-action{
+  &--defend { background-color: $defend; }
+  &--magic {  background-color: $magic; }
+  &--attack { background-color: $attack; }
+  &--heal {   background-color: $heal; }
+  &--hidden { background-color: $hidden; }
+}
+
+.bar--actions {
+  top: 195px;
+  position: absolute;
+  height: 80px;
+  border-bottom: 1px solid brown;
+  width: 100%;
+}
+
+// Actions!!
+.action {
+  width: 25%;
+  height: 100%;
+  float: left;
+
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  // Everything other than the last child
+  &:not(:last-child) {
+    border-right: 1px solid brown;
+  }
+  // Hovering changing this
+  &:hover {
+    background-color: rgba( 255,255,255,0.5 );
+  }
+
+  // Style the actions 
+  &--defend { background-color: $defend; }
+  &--magic {  background-color: $magic; }
+  &--attack { background-color: $attack; }
+  &--heal {   background-color: $heal; }
+}
+
+
+// Units!
+.squad-manager {
+  width: 100%;
+  position: absolute;
+  top: 275px;
+  height: 205px;
+  background: white;
+  padding-left: 56px;
+}
+
+.unit-window {
+  width: 51px;
+  height: 51px;
+  border: 1px solid brown;
+  float: left;
+  transition: background-color 0.2s;
+
+  // Center Align each unit without any margins
+  // This doesn't work in older browsers though.
+  // Is it worth using CSS3 things over older techniques
+  // to allow older browsers to use it?
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover{
+    background-color: #999;
+  }
+  &:nth-of-type(4n+1) {
+    clear: left;
+  }
+}
+
+// Those little men things
+.unit {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 1px solid black;
+  position: relative;
+
+  // Style the united
+  &-attacker {  border-color: $attack; }
+  &-defender {  border-color: $defend; }
+  &-healer {    border-color: $heal; }
+}
+
+.bar-health {
+  height: 3px;
+  width: 25px;
+  position: absolute;
+  top: -8px;
+  left: -3px;
+  background-color: red;
+  
+  .life {
+    height: 100%;
+    background-color: green;
+  }
+}
