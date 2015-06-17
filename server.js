@@ -54,10 +54,20 @@ var create_new_room = function() {
       wid: wid,
       actions: [],
     };
-
-    client.emit( 'joined', {
-      title: room.title
-    } );
+    for ( var _pid in room.players ) {
+      var player = room.players[_pid];
+      player.client.emit( 'joined', {
+        pid: pid,
+        self: _pid == pid,
+        title: room.title,
+        wid: wid,
+        room:{
+          full: room.slots[0] == room.slots[1],
+          title:room.title,
+          slots:room.slots,
+        }
+      } );
+    }
 
     return slot_no;
   };
@@ -115,6 +125,7 @@ var game = io.of( '/game' ).on( 'connection', function ( client ) {
   client.on( 'queue-action', function ( data ) {
     var action = data.action;
     var wid = data.wid;
+    console.log( action );
 
     var room = active_rooms[wid];
     if ( !room ) {

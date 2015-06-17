@@ -51,8 +51,6 @@ scene.display_only = function( _s ) {
   for ( var x in game.scenes ) {
     _sx = game.scenes[x];
     if ( _s.id !== _sx.id ) {
-      console.log( _sx );
-      console.log( _sx.element );
       _sx.element.hide();
     }
   }

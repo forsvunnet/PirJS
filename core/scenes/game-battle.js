@@ -4,7 +4,7 @@
       var i, bw_id = new_id();
       html = '';
       html += '<h1>Game battle</h1>';
-      html += '<div class=battle-window id=bw-'+ bw_id +' data-id='+ bw_id +'>';
+      html += '<div class="battle-window" id=bw-'+ bw_id +' data-id='+ bw_id +'>';
         html += '<div class=bar--top>';
           html += '<div class=bar--exp title="Experience"></div>';
           html += '<div class=info--attack-power title="Attack Power"></div>';
@@ -37,14 +37,28 @@
       return html;
     },
     display: function( scene ) {
-
-      var state = 'pending';
-
-      // Go directly to battle for now
-      state = 'battle';
-
       // Get the window
       var bw = scene.element.find( '.battle-window' );
+
+      // Wait for all players to connect
+      var state = 'pending';
+
+      // Helper function to set state
+      var set_state = function( _s ) {
+        state = _s;
+        bw.removeClass( function ( index, classes ) {
+          return ( classes.match( /(^|\s)state-\S+/g ) || [] ).join(' ');
+        } );
+        if (0) { }
+        else if ( 'pending' == _s ) {
+          bw.find( '.title' ).text( 'Waiting for another player..' );
+        }
+        else if ( 'battle' == _s ) {
+          bw.find( '.title' ).text( 'Commence battle!' );
+        }
+        bw.addClass( 'state-' + _s );
+      };
+      set_state( state );
 
       // Let modules hook in on the action
       action( 'battle-window', bw );
@@ -58,7 +72,8 @@
       var bw_id = bw.data( 'id' );
 
       // Are we playing another player or an AI?
-      network.quickstart( bw_id );
+      var _n = network( bw_id );
+      _n.quickstart();
 
       // Do some interesting stuffs here
       console.log( 'Start the game' );
@@ -91,7 +106,7 @@
         slot_item.addClass( 'queue-action--'+ _a );
 
         // Send the action to server
-        network.queue( bw_id, _a );
+        _n.queue( _a );
 
       };
       // Bind the action buttons
@@ -99,7 +114,8 @@
 
       // Handle oponent actions
       var oponent_slots = 8;
-      var oponent_action = function() {
+      var oponent_action = function( e, data ) {
+        console.log( data );
         // Get the slot to fill
         var slot = filter( 'slot', 7 + oponent_slots );
         oponent_slots--;
@@ -111,6 +127,18 @@
         slot_item.addClass( 'queue-action--hidden' );
       };
       bw.on( 'player-action', oponent_action );
+
+      /**
+       * Player joined
+       */
+      var player_joined = function( e, data ) {
+        console.log( e );
+        console.log( data );
+        if ( data.room.full ) {
+          set_state( 'battle' );
+        }
+      };
+      bw.on( 'player-joined', player_joined );
 
       /**
        * Units
@@ -140,6 +168,9 @@
 
       for ( var i = 0; i < units.length; i++ ) {
         var unit = units[i];
+        // Add the unit to the network
+        _n.add_unit( i, unit );
+        // Place the unit in the squad manager
         bw.find( '.unit-window-'+ i ).append( unit.element );
       }
     }

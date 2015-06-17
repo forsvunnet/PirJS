@@ -12,25 +12,33 @@
   } );
   socket.on( 'joined', function( data ) {
     console.log( 'Joined!' );
-    console.log( data );
+    $( '#bw-'+ data.wid ).trigger( 'player-joined', data );
   } );
   socket.on( 'player-action', function( data ) {
     console.log( 'Player action recieved!' );
-    console.log( data );
-    $( '#bw-'+ data.wid ).trigger( 'player-action' );
-    console.log( $( '#bw-'+ data.wid ) );
+    $( '#bw-'+ data.wid ).trigger( 'player-action', data );
   } );
 
-  w.network = {
-    register: function() {
+  w.network = function( wid ) {
+    var obj = {
+      register: function() {
 
-    },
-    quickstart: function( wid ) {
-      socket.emit( 'quickstart', wid );
-    },
-    queue: function( wid, action ) {
-      socket.emit( 'queue-action', { wid:wid, action:action } );
-    }
+        return obj;
+      },
+      quickstart: function( ) {
+        socket.emit( 'quickstart', wid );
+        return obj;
+      },
+      queue: function( action ) {
+        socket.emit( 'queue-action', { wid:wid, action:action } );
+        return obj;
+      },
+      add_unit: function( unit, position ) {
+        return obj;
+      }
+    };
+
+    return obj;
   };
 
 } ( window ) );
