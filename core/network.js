@@ -34,6 +34,13 @@
         return obj;
       },
       add_unit: function( unit, position ) {
+        socket.emit( 'add-unit', {
+          wid:wid,
+          unit: {
+            name: unit.name,
+            type: unit.type || 1,
+          },
+          position:position } );
         return obj;
       }
     };

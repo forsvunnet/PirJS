@@ -50,6 +50,7 @@
   w.spawn.unit = function( unit_name, type ) {
     // Get the unit asset
     var _ua = get_asset( 'unit', unit_name );
+    _ua.type = type;
 
     return _ua;
   };

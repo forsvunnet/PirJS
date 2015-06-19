@@ -53,6 +53,7 @@ var create_new_room = function() {
       client: client,
       wid: wid,
       actions: [],
+      units: [],
     };
     for ( var _pid in room.players ) {
       var player = room.players[_pid];
@@ -75,11 +76,71 @@ var create_new_room = function() {
     console.log ( 'Player ['+ pid +'] prepares to '+ action.replace('magic', 'do magic') );
     room.players[pid].actions.push( action );
 
-    // Let other players know
-    for ( var x in room.players ) { if ( pid != x ) {
-      var wid = room.players[x].wid;
-      room.players[x].client.emit( 'player-action', {pid: pid, wid: wid} );
-    } }
+    var total_actions = 0;
+    // Loop through players
+    for ( var x in room.players ) {
+      var player = room.players[x];
+      if ( pid != x ) {
+        var wid = player.wid;
+        // Let other players know
+        player.client.emit( 'player-action', { pid: pid, wid: wid } );
+      }
+      // Count actions total
+      total_actions += player.actions.length;
+    }
+
+    // Ready to fight?
+    if ( 16 == total_actions ) {
+      // Fight!
+      room.start_figth();
+    }
+
+  };
+
+  room.add_unit = function( pid, unit ) {
+    room.players[pid].units.push( unit );
+  };
+
+  var fight_frequency, current_action, previous_action;
+  room.reset_vars = function() {
+    fight_frequency = 100;
+    current_action = 0;
+    previous_action = -1;
+  };
+  room.reset_vars();
+
+  room.fight = function() {
+    var pid, player, actions = [];
+    // Build an array of actions
+    for ( pid in room.players ) {
+      player = room.players[pid];
+      if ( current_action != previous_action ) {
+        var action = player.actions[current_action];
+        actions.push( { pid: pid, action: action } );
+        console.log( 'Player ['+ pid +'] is '+ action +'ing' );
+      }
+    }
+    // Loop through units
+    for ( pid in room.players ) {
+      player = room.players[pid];
+      // Activate actions
+      if ( actions.length ) {
+        // Send action instructions for all players to all players
+        player.client.emit( 'do-actions', { wid: player.wid, actions: actions, pid: pid } );
+      }
+      // Let units have at it
+      for ( var y in player.units ) {
+        var _u = player.units[y];
+        _u.fight( room );
+      }
+    }
+
+    previous_action = current_action;
+  };
+  var fight_interval;
+  room.start_figth = function() {
+    // Start an interval function that triggers unit actions
+    fight_interval = setInterval( room.fight, fight_frequency );
   };
 
   battle_rooms[room.id] = room;
@@ -122,12 +183,14 @@ var game = io.of( '/game' ).on( 'connection', function ( client ) {
 
     active_rooms[wid] = room_to_join;
   } );
+
+  /**
+   * Player action
+   */
   client.on( 'queue-action', function ( data ) {
     var action = data.action;
-    var wid = data.wid;
-    console.log( action );
+    var room = active_rooms[data.wid];
 
-    var room = active_rooms[wid];
     if ( !room ) {
       console.log( 'Client tried to use a room that doesn\'t exist!' );
       return;
@@ -135,5 +198,38 @@ var game = io.of( '/game' ).on( 'connection', function ( client ) {
 
     room.queue_action( pid, action );
   } );
+
+  /**
+   * Add unit
+   */
+  client.on( 'add-unit', function ( data ) {
+    var unit = data.unit;
+    var position = data.position;
+    var room = active_rooms[data.wid];
+    var pos = pos2xy( position );
+
+    unit.x = pos.x;
+    unit.y = pos.y;
+
+    unit.fight = function( room ) {
+
+    };
+
+    if ( !room ) {
+      console.log( 'Client tried to use a room that doesn\'t exist!' );
+      return;
+    }
+
+    room.add_unit( pid, unit );
+  } );
   console.log( 'Someone connected' );
 } );
+
+var pos2xy = function( position, column_length ) {
+  if ( !column_length )
+    column_length = 4;
+  return {
+    x: position % column_length,
+    y: Math.floor( position / column_length )
+  };
+};

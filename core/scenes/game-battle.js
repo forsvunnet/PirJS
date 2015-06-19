@@ -65,9 +65,9 @@
         else if ( 'done-opponent' == _s ) {
           bw.find( '.title' ).text( 'Opponent is wating for you..' );
         }
-        else if ( 'clash' == _s ) {
+        else if ( 'fight' == _s ) {
           allow_battle = false;
-          bw.find( '.title' ).text( 'Clash!' );
+          bw.find( '.title' ).text( 'Fight!' );
         }
         bw.addClass( 'state-' + _s );
       };
@@ -123,7 +123,7 @@
 
         if ( 0 === available_slots ) {
           if ( 'done-opponent' === state ) {
-            set_state( 'clash' );
+            set_state( 'fight' );
           }
           else {
             set_state( 'done' );
@@ -149,7 +149,7 @@
 
         if ( 0 === opponent_slots ) {
           if ( 'done' === state ) {
-            set_state( 'clash' );
+            set_state( 'fight' );
           }
           else {
             set_state( 'done-opponent' );
@@ -199,7 +199,7 @@
       for ( var i = 0; i < units.length; i++ ) {
         var unit = units[i];
         // Add the unit to the network
-        _n.add_unit( i, unit );
+        _n.add_unit( unit, i );
         // Place the unit in the squad manager
         bw.find( '.unit-window-'+ i ).append( unit.element );
       }
