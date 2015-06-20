@@ -1,12 +1,13 @@
 /* actions.scss */
 
 .bar--action-queue {
-  top: 170px;
   position: absolute;
-  height: 25px;
   background-color: $game;
-  width: 100%;
   border-top: 1px solid darken($page, 5%);
+
+  top: 170px;
+  height: 25px;
+  
 }
 
 .queue-item {
@@ -14,6 +15,11 @@
   height: 25px;
   border-right: 1px solid darken($game, 10%);
   float: left;
+
+/* ====== % instead of px =====*/
+  height: 100%;
+  width: 6.25%; // 16 Cards
+/* ====== % instead of px =====*/
 
   &-15 {
     border-right: 0;

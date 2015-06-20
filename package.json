@@ -1,18 +1,28 @@
 {
-  "name": "PirJS",
-  "version": "0.0.1",
-  "description": "A simple JS game",
-  "dependencies": {
-    "socket.io": "~1.3.5",
-    "express": "~4.12.4",
-    "nodemon": "~1.3.7"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/forsvunnet/PirJS.git"
-  },
-  "author": "Eivin Landa",
-  "license": "MIT",
-  "homepage": "https://github.com/forsvunnet/PirJS"
+	"author": "Eivin Landa",
+	"dependencies":
+	{
+		"express": "~4.12.4",
+		"nodemon": "~1.3.7",
+		"socket.io": "~1.3.5"
+	},
+	"description": "A simple JS game",
+	"devDependencies":
+	{
+	},
+	"folders":
+	[
+		{
+			"path": "/Users/yratof/Sites/PirJS"
+		}
+	],
+	"homepage": "https://github.com/forsvunnet/PirJS",
+	"license": "MIT",
+	"name": "PirJS",
+	"repository":
+	{
+		"type": "git",
+		"url": "https://github.com/forsvunnet/PirJS.git"
+	},
+	"version": "0.0.1"
 }
