@@ -63,7 +63,7 @@
   top: 12px;
   left: -5px;
   background-color: $death;
-  
+
   .life {
     height: 100%;
     background-color: $life;
@@ -76,7 +76,7 @@
 
 $degree: 40deg;
 
-.unit-window { 
+.unit-window {
 	transform: rotate($degree);
 	width: 50px;
 	height: 65px;
@@ -88,9 +88,24 @@ $degree: 40deg;
 
 	left: 40px;
 	// This is clever and ugly and pretty at the same time.
-	& + & + & + & + &{ left: -1px; top: -2px; } // second row
-	& + & + & + & + & + & + & + & + &{ left: 22px; top: -4px; } // third row
-	& + & + & + & + & + & + & + & + & + & + & + & + &{   left: -19px; top: -6px; } // last row
+	//& + & + & + & + &{ left: -1px; top: -2px; } // second row
+	//& + & + & + & + & + & + & + & + &{ left: 22px; top: -4px; } // third row
+	//& + & + & + & + & + & + & + & + & + & + & + & + &{   left: -19px; top: -6px; } // last row
+}
+@for $i from 4 through 7 {
+  .unit-window-#{$i} {
+    left: -1px; top: -2px;
+  }
+}
+@for $i from 8 through 11 {
+  .unit-window-#{$i} {
+    left: 22px; top: -4px;
+  }
+}
+@for $i from 12 through 15 {
+  .unit-window-#{$i} {
+    left: -19px; top: -6px;
+  }
 }
 
 // Reverse the rotation

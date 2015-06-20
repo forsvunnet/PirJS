@@ -39,25 +39,3 @@
 }
 
 
-
-/*===============*/
-// Units
-/*===============*/
-.squad-manager{
-  height: 100%;
-  width: 100%;
-  top: 57%;	
-}
-
-.unit-window{
-	width: 17%;
-	height: 14%;
-
-
-	left: 14%;
-	// This is clever and ugly and pretty at the same time.
-	& + & + & + & + &{ left: -1px; top: -2px; } // second row
-	& + & + & + & + & + & + & + & + &{ left: 22px; top: -4px; } // third row
-	& + & + & + & + & + & + & + & + & + & + & + & + &{   left: -19px; top: -6px; } // last row
-
-}
