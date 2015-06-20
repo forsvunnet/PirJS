@@ -1,13 +1,15 @@
 // Units
 
 .squad-manager {
-  width: 100%;
   position: absolute;
-  top: 275px;
-  height: 205px;
+
   background-color: $game;
   padding-left: 20px;
   overflow: hidden;
+
+  height: 205px;
+  width: 100%;
+  top: 275px;
 }
 
 .unit-window {

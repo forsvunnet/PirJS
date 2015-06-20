@@ -1,0 +1,63 @@
+/* Absolute positioning everything with px makes it  single-device-centric. I'm going to migrate all widths, height and positions into % so we can scale the whole game regardless of which device it's on. */
+
+
+/*===============*/
+// UI
+/*===============*/
+
+// Change this when we have a set size
+.battle-window {
+  width: 320px;
+  height: 480px;
+}
+
+.bar--top {
+  height: 5%;
+  width: 100%;
+}
+
+
+/*===============*/
+// Actions
+/*===============*/
+
+.bar--action-queue{
+  top: 38%;
+  height: 5%;
+  width: 100%;
+}
+
+.queue-item {
+  height: 100%;
+  width: 6.25%; // 16 Cards
+}
+
+.bar--actions{
+	height: 14%;
+	width: 100%;
+	top: 43%;
+}
+
+
+
+/*===============*/
+// Units
+/*===============*/
+.squad-manager{
+  height: 100%;
+  width: 100%;
+  top: 57%;	
+}
+
+.unit-window{
+	width: 17%;
+	height: 14%;
+
+
+	left: 14%;
+	// This is clever and ugly and pretty at the same time.
+	& + & + & + & + &{ left: -1px; top: -2px; } // second row
+	& + & + & + & + & + & + & + & + &{ left: 22px; top: -4px; } // third row
+	& + & + & + & + & + & + & + & + & + & + & + & + &{   left: -19px; top: -6px; } // last row
+
+}

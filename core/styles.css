@@ -2,8 +2,8 @@
 /* Typography */
 @font-face {
   font-family: 'sf';
-  src: url("fonts/sf.eot");
-  src: url("fonts/sf.eot?#iefix") format("embedded-opentype"), url("fonts/sf.woff2") format("woff2"), url("fonts/sf.woff") format("woff"), url("fonts/sf.ttf") format("truetype"), url("fonts/sf.svg#sfthin") format("svg");
+  src: url("assets/fonts/sf.eot");
+  src: url("assets/fonts/sf.eot?#iefix") format("embedded-opentype"), url("assets/fonts/sf.woff2") format("woff2"), url("assets/fonts/sf.woff") format("woff"), url("assets/fonts/sf.ttf") format("truetype"), url("assets/fonts/sf.svg#sfthin") format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -31,19 +31,17 @@ html, body {
 /* UI elements */
 .title {
   color: black;
+  text-align: center;
 }
 
 .bar--top {
-  height: 25px;
   background-color: white;
-  border-bottom: 1px solid #1c2323;
-  width: 320px;
   margin: auto;
+  width: 320px;
+  height: 25px;
 }
 
 .battle-window {
-  width: 320px;
-  height: 480px;
   background: #273131;
   position: relative;
   margin: 0 auto;
@@ -53,12 +51,11 @@ html, body {
 
 /* actions.scss */
 .bar--action-queue {
-  top: 170px;
   position: absolute;
-  height: 25px;
   background-color: #273131;
-  width: 100%;
   border-top: 1px solid #1c2323;
+  top: 170px;
+  height: 25px;
 }
 
 .queue-item {
@@ -66,6 +63,10 @@ html, body {
   height: 25px;
   border-right: 1px solid #101515;
   float: left;
+  /* ====== % instead of px =====*/
+  height: 100%;
+  width: 6.25%;
+  /* ====== % instead of px =====*/
 }
 .queue-item-15 {
   border-right: 0;
@@ -158,13 +159,13 @@ html, body {
 }
 
 .squad-manager {
-  width: 100%;
   position: absolute;
-  top: 275px;
-  height: 205px;
   background-color: #273131;
   padding-left: 20px;
   overflow: hidden;
+  height: 205px;
+  width: 100%;
+  top: 275px;
 }
 
 .unit-window {
@@ -285,6 +286,11 @@ html, body {
   height: 145px;
   width: 25px;
   top: 25px;
+  /* ====== % instead of px =====*/
+  height: 33%;
+  width: 6%;
+  top: 5%;
+  /* ====== % instead of px =====*/
   position: absolute;
   background-color: #3e4d4d;
 }
@@ -318,4 +324,62 @@ html, body {
 }
 .filler:hover {
   height: 50%;
+}
+
+/* Absolute positioning everything with px makes it  single-device-centric. I'm going to migrate all widths, height and positions into % so we can scale the whole game regardless of which device it's on. */
+/*===============*/
+/*===============*/
+.battle-window {
+  width: 320px;
+  height: 480px;
+}
+
+.bar--top {
+  height: 5%;
+  width: 100%;
+}
+
+/*===============*/
+/*===============*/
+.bar--action-queue {
+  top: 38%;
+  height: 5%;
+  width: 100%;
+}
+
+.queue-item {
+  height: 100%;
+  width: 6.25%;
+}
+
+.bar--actions {
+  height: 14%;
+  width: 100%;
+  top: 43%;
+}
+
+/*===============*/
+/*===============*/
+.squad-manager {
+  height: 100%;
+  width: 100%;
+  top: 57%;
+}
+
+.unit-window {
+  width: 17%;
+  height: 14%;
+  left: 14%;
+}
+.unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
+  left: -1px;
+  top: -2px;
+}
+.unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
+  left: 22px;
+  top: -4px;
+}
+.unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
+  left: -19px;
+  top: -6px;
 }
