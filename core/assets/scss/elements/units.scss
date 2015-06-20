@@ -94,23 +94,23 @@ $degree: 40deg;
 }
 
 
-%secondRow{left: -1px; top: -2px;}
-%thirdRow{left: 22px; top: -4px;}
-%lastRow{left: -19px; top: -6px;}
+%second-row{left: -1px; top: -2px;}
+%third-row{left: 22px; top: -4px;}
+%last-row{left: -19px; top: -6px;}
 
 @for $i from 4 through 7 {
   .unit-window-#{$i} {
-    @extend %secondRow;
+    @extend %second-row;
   }
 }
 @for $i from 8 through 11 {
   .unit-window-#{$i} {
-    @extend %thirdRow;
+    @extend %third-row;
   }
 }
 @for $i from 12 through 15 {
   .unit-window-#{$i} {
-    @extend %lastRow;
+    @extend %last-row;
   }
 }
 
