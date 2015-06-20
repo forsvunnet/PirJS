@@ -244,15 +244,18 @@ html, body {
   margin: -1px 14px -13px 0px;
   left: 40px;
 }
-.unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
+
+.unit-window-4, .unit-window-5, .unit-window-6, .unit-window-7 {
   left: -1px;
   top: -2px;
 }
-.unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
+
+.unit-window-8, .unit-window-9, .unit-window-10, .unit-window-11 {
   left: 22px;
   top: -4px;
 }
-.unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
+
+.unit-window-12, .unit-window-13, .unit-window-14, .unit-window-15 {
   left: -19px;
   top: -6px;
 }
@@ -356,30 +359,4 @@ html, body {
   height: 14%;
   width: 100%;
   top: 43%;
-}
-
-/*===============*/
-/*===============*/
-.squad-manager {
-  height: 100%;
-  width: 100%;
-  top: 57%;
-}
-
-.unit-window {
-  width: 17%;
-  height: 14%;
-  left: 14%;
-}
-.unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
-  left: -1px;
-  top: -2px;
-}
-.unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
-  left: 22px;
-  top: -4px;
-}
-.unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window + .unit-window {
-  left: -19px;
-  top: -6px;
 }
