@@ -196,8 +196,14 @@
       units.push( spawn.unit( 'healer' ) );
       units.push( spawn.unit( 'attacker', 3 ) );
 
+      drag_handler = function( e ) {
+        e.preventDefault();
+      };
+
       for ( var i = 0; i < units.length; i++ ) {
         var unit = units[i];
+
+        unit.element.click( drag_handler );
         // Add the unit to the network
         _n.add_unit( unit, i );
         // Place the unit in the squad manager

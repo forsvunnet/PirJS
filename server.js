@@ -10,6 +10,9 @@ var app = express();
 var server = require( 'http' ).Server( app );
 var io = require( 'socket.io' )( server );
 
+var utility = {
+  units: require( './server/units.js' )
+};
 
 
 server.listen( 8080 );
@@ -38,11 +41,11 @@ app.use( "/core", express.static( __dirname + '/core' ) );
 
 
 var battle_rooms = {};
-var _rid_base = 1138;
+var _id_base = 1138;
 var create_new_room = function() {
   var room = {
     title: 'Battle room',
-    id: _rid_base++,
+    id: _id_base++,
     slots: [0, 2],
     players: {},
   };
@@ -92,7 +95,7 @@ var create_new_room = function() {
     // Ready to fight?
     if ( 16 == total_actions ) {
       // Fight!
-      room.start_figth();
+      room.start_fight();
     }
 
   };
@@ -102,10 +105,12 @@ var create_new_room = function() {
   };
 
   var fight_frequency, current_action, previous_action;
+  var fight_duration, fight_time = 1000;
   room.reset_vars = function() {
     fight_frequency = 100;
     current_action = 0;
     previous_action = -1;
+    fight_duration = fight_time;
   };
   room.reset_vars();
 
@@ -131,17 +136,34 @@ var create_new_room = function() {
       // Let units have at it
       for ( var y in player.units ) {
         var _u = player.units[y];
-        _u.fight( room );
+        _u.fight();
       }
     }
 
     previous_action = current_action;
+
+    fight_duration -= fight_frequency;
+    if ( 0 >= fight_duration ) {
+      current_action++;
+      if ( 8 <= current_action ) {
+        room.stop_fight();
+      }
+      fight_duration = fight_time;
+    }
   };
   var fight_interval;
-  room.start_figth = function() {
+  room.start_fight = function() {
     // Start an interval function that triggers unit actions
     fight_interval = setInterval( room.fight, fight_frequency );
   };
+  room.stop_fight = function() {
+    fight_interval = clearInterval( fight_interval );
+    for ( var pid in room.players ) {
+      var player = room.players[pid];
+      player.client.emit( 'stop-fight' );
+    }
+  };
+
 
   battle_rooms[room.id] = room;
   return room;
@@ -210,10 +232,10 @@ var game = io.of( '/game' ).on( 'connection', function ( client ) {
 
     unit.x = pos.x;
     unit.y = pos.y;
-
-    unit.fight = function( room ) {
-
-    };
+    unit.pid = pid;
+    unit.uid = _id_base++;
+    unit.room = room;
+    utility.units.setup( unit );
 
     if ( !room ) {
       console.log( 'Client tried to use a room that doesn\'t exist!' );

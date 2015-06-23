@@ -13,7 +13,7 @@
       setTimeout( function() {
         console.log( 'Go to battle');
         scene.goto( 'game-battle' );
-      }, 250 );
+      }, 10 );
     }
   };
 } ( game.asset.scene ) );

@@ -8,7 +8,7 @@
       // to the game menu
       setTimeout( function() {
         scene.goto( 'menu' );
-      }, 1000 );
+      }, 10 );
     }
   };
 

@@ -7,7 +7,7 @@
       // We're temporarily skipping all the menus while developing
       setTimeout( function() {
         scene.goto( 'multiplayer' );
-      }, 500 );
+      }, 10 );
     }
   };
 } ( game.asset.scene ) );
