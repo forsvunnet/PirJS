@@ -102,6 +102,21 @@ var create_new_room = function() {
 
   room.add_unit = function( pid, unit ) {
     room.players[pid].units.push( unit );
+    // Give a notice to all players
+    for ( var x in room.players ) {
+      var player = room.players[x];
+      var _u = {
+        id: unit.id,
+        name: unit.name,
+        type: unit.type,
+        x: unit.x,
+        y: unit.y,
+        pid: unit.pid,
+        uid: unit.uid,
+        data: unit.data,
+      };
+      player.client.emit( 'unit-added', { wid:player.wid, pid:pid, unit:_u } );
+    }
   };
 
   var fight_frequency, current_action, previous_action;

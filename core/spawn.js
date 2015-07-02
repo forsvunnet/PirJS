@@ -13,18 +13,21 @@
     }
     asset = filter( 'spawn-asset-asset', asset, asset_type );
 
+    var id = filter( 'spawn-asset-id', new_id() );
+
     // Spawn the HTML for the asset
     var html = filter( 'spawn-asset-html', asset.spawn(), asset_type );
 
     // Create the asset element
     var element = $( filter( 'spawn-asset-tag', '<div>' ) );
     var html_classes = asset_type +' '+ asset_type +'-'+ asset_name;
+    html_classes += ' '+ asset_type +'-id-'+ id;
     element.addClass( filter( 'spawn-asset-class', html_classes, asset_type ) );
     element.html( html );
 
     // Return an asset object
     return {
-      id: filter( 'spawn-asset-id', new_id() ),
+      id: id,
       name: asset_name,
       element: element,
       display: asset.display

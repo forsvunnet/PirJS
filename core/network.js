@@ -18,6 +18,9 @@
     console.log( 'Player action recieved!' );
     $( '#bw-'+ data.wid ).trigger( 'player-action', data );
   } );
+  socket.on( 'unit-added', function( data ) {
+    $( '#bw-'+ data.wid ).trigger( 'unit-added', data );
+  } );
   socket.on( 'unit-fight', function( data ) {
     // console.log( 'Fight data recieved!' );
     $( '#bw-'+ data.wid ).trigger( 'unit-fight', data );

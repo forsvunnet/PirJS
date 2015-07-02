@@ -75,7 +75,15 @@ module.exports = {
         var life_pst = 0;
         if ( target.data.life > 0 )
           life_pst = target.data.life / target.data.max_life;
-        actions.push( ['attack', { attacker: unit.id, target: target.id, damage: damage, life_pst: life_pst }] );
+
+        // Push the attack (player (self) pid is given in server.js)
+        actions.push( ['attack', {
+          attacker: unit.id,
+          target: target.id,
+          target_pid: target.pid,
+          damage: damage,
+          life_pst: life_pst
+        }] );
       }
     }
 

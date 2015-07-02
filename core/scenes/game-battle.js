@@ -6,12 +6,13 @@
       html += '<h1>Game battle</h1>';
       html += '<div class="battle-window" id=bw-'+ bw_id +' data-id='+ bw_id +'>';
         html += '<div class=bar--top>';
+          html += '<div class="title">battle-screen</div>';
           html += '<div class=bar--exp title="Experience"></div>';
           html += '<div class=info--attack-power title="Attack Power"></div>';
           html += '<div class=info--squad-count title="Squad Count"></div>';
-          html += '<div class=info--gold  title="Gold?"</div>';
+          html += '<div class=info--gold  title="Gold?"></div>';
         html += '</div>';
-        html += '<div class="title">battle-screen</div>';
+        html += '<div class="mini-map"></div>';
         html += '<div class="bar-vertical bar--life" title="Life"><div class=filler></div></div>';
         html += '<div class="bar-vertical bar--mana" title="Mana"><div class=filler></div></div>';
         html += '<div class=bar--action-queue>';
@@ -151,7 +152,6 @@
       // Handle opponent actions
       var opponent_slots = 8;
       var opponent_action = function( e, data ) {
-        console.log( data );
         // Get the slot to fill
         var slot = filter( 'slot', 7 + opponent_slots );
         opponent_slots--;
@@ -192,7 +192,6 @@
       var units = [];
 
       units.push( spawn.unit( 'defender' ) );
-      console.log( units );
       units.push( spawn.unit( 'attacker' ) );
       units.push( spawn.unit( 'attacker' ) );
       units.push( spawn.unit( 'defender' ) );
@@ -250,14 +249,15 @@
             for ( var _a = 0; _a < unit_actions.length; _a++ ) {
 
               // Take one of the many actions the unit performed (perhaps only one)
-              var action = unit_actions[a];
+              var action = unit_actions[_a];
 
-              // Sanity =) make sure the action is viable
-              if ( !action )
-                continue;
+
+              var mini_target = bw.find( '.mini-map .player-'+ action[1].target_pid +' .unit-'+ action[1].target );
+              var mini_attacker = bw.find( '.mini-map .player-'+ _p +'.unit-'+ action[1].attacker );
 
               // Get the target unit and update its life
               for ( var i = 0; i < units.length; i++ ) {
+                // (this array itteration seems to be quicker than jQuery select?)
                 var unit = units[i];
                 if ( unit.id == action[1].target) {
                   unit.element.find('.life').width( 100 * action[1].life_pst +'%' );
@@ -268,6 +268,11 @@
         }
       };
       bw.on( 'unit-fight', unit_fight );
+
+      var unit_added = function( e, data ) {
+        console.log( data );
+        // @TODO: Populate mini-map
+      };
 
 
 
