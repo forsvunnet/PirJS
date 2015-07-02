@@ -63,11 +63,16 @@ module.exports = {
         // Skip deactive units
         if ( units[i].deactive )
           continue;
+
+        // Add a bit of random to our lives
+        if ( Math.random() > 0.1 )
+          continue; // 10% chance of attack
+
         var target = units[i];
         var damage = unit.data.attack;
 
         damage += ( Math.random() * damage ) / 2;
-        damage /= 300;
+        damage /= 50;
         damage /= target.data.armor;
 
         // A succesfull attack
