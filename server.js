@@ -115,16 +115,25 @@ var create_new_room = function() {
   room.reset_vars();
 
   room.fight = function() {
-    var pid, player, actions = [];
+    var pid, player, actions = [], unit_actions;
+    var y, _u, data;
     // Build an array of actions
     for ( pid in room.players ) {
       player = room.players[pid];
+      // Compare previous to current action (integer)
       if ( current_action != previous_action ) {
+        // Get the type of action being performed
         var action = player.actions[current_action];
+        // Push the action
         actions.push( { pid: pid, action: action } );
+        // Display the action being performed in the server window
         console.log( 'Player ['+ pid +'] is '+ action +'ing' );
       }
     }
+
+    // Reset unit actions
+    unit_actions = {};
+
     // Loop through units
     for ( pid in room.players ) {
       player = room.players[pid];
@@ -133,11 +142,48 @@ var create_new_room = function() {
         // Send action instructions for all players to all players
         player.client.emit( 'do-actions', { wid: player.wid, actions: actions, pid: pid } );
       }
-      // Let units have at it
-      for ( var y in player.units ) {
-        var _u = player.units[y];
-        _u.fight();
+
+      // Ready the unit actions
+      unit_actions[pid] = [];
+      // Let units have at it (Battle stage)
+      for ( y in player.units ) {
+        _u = player.units[y];
+        // Trigger the fight function defined in server/units.js
+        data = _u.fight();
+        if ( data.length )
+          unit_actions[pid].push( data );
       }
+    }
+
+    // Tally the actions before sending them
+    for ( pid in room.players ) {
+      player = room.players[pid];
+      player.client.emit( 'unit-fight', { wid: player.wid, actions: unit_actions, pid: pid } );
+    }
+
+
+    // Reset unit actions
+    unit_actions = {};
+
+    // Count the dead (Post battle)
+    for ( pid in room.players ) {
+      player = room.players[pid];
+
+      // Ready the unit actions
+      unit_actions[pid] = [];
+      for ( y in player.units ) {
+        _u = player.units[y];
+        // Trigger the post fight function defined in server/units.js
+        data = _u.post_fight();
+        if ( data.length )
+          unit_actions[pid].push( data );
+      }
+    }
+
+    // Tally the actions before sending them
+    for ( pid in room.players ) {
+      player = room.players[pid];
+      player.client.emit( 'unit-post-fight', { wid: player.wid, actions: unit_actions, pid: pid } );
     }
 
     previous_action = current_action;
@@ -162,6 +208,7 @@ var create_new_room = function() {
       var player = room.players[pid];
       player.client.emit( 'stop-fight' );
     }
+    console.log( 'Fighting ended' );
   };
 
 

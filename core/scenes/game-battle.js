@@ -133,6 +133,21 @@
       // Bind the action buttons
       bw.find( '.action' ).click( take_action );
 
+
+
+
+
+      // TOTAL DEV FUNCTION - AUTOMATED BATTLING
+      setInterval( function() {
+        var random = Math.floor(Math.random()*4);
+        bw.find( '.action' ).eq( random ).click();
+      }, 50 );
+      // TOTAL DEV FUNCTION - AUTOMATED BATTLING
+
+
+
+
+
       // Handle opponent actions
       var opponent_slots = 8;
       var opponent_action = function( e, data ) {
@@ -177,6 +192,7 @@
       var units = [];
 
       units.push( spawn.unit( 'defender' ) );
+      console.log( units );
       units.push( spawn.unit( 'attacker' ) );
       units.push( spawn.unit( 'attacker' ) );
       units.push( spawn.unit( 'defender' ) );
@@ -209,6 +225,53 @@
         // Place the unit in the squad manager
         bw.find( '.unit-window-'+ i ).append( unit.element );
       }
+
+
+      // Remember that units have to be id'ed on both pid and unit.id
+      var unit_fight = function( e, data ) {
+        var pid = data.pid;
+
+        // We recieve all data for all players
+        for ( var _p in data.actions ) {
+
+          // We already know what we (ourself) did
+          if ( _p == pid )
+            continue;
+
+          // Get the player (opponent) action
+          var player_actions = data.actions[_p];
+
+          // Then itterate on those unit actions
+          for ( var a = 0; a < player_actions.length; a++ ) {
+            // Get the unit action
+            var unit_actions = player_actions[a];
+
+            // Itterate the unit actions
+            for ( var _a = 0; _a < unit_actions.length; _a++ ) {
+
+              // Take one of the many actions the unit performed (perhaps only one)
+              var action = unit_actions[a];
+
+              // Sanity =) make sure the action is viable
+              if ( !action )
+                continue;
+
+              // Get the target unit and update its life
+              for ( var i = 0; i < units.length; i++ ) {
+                var unit = units[i];
+                if ( unit.id == action[1].target) {
+                  unit.element.find('.life').width( 100 * action[1].life_pst +'%' );
+                }
+              }
+            }
+          }
+        }
+      };
+      bw.on( 'unit-fight', unit_fight );
+
+
+
+
     }
   };
 } ( game.asset.scene ) );

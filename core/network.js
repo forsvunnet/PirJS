@@ -18,6 +18,14 @@
     console.log( 'Player action recieved!' );
     $( '#bw-'+ data.wid ).trigger( 'player-action', data );
   } );
+  socket.on( 'unit-fight', function( data ) {
+    // console.log( 'Fight data recieved!' );
+    $( '#bw-'+ data.wid ).trigger( 'unit-fight', data );
+  } );
+  socket.on( 'unit-post-fight', function( data ) {
+    // console.log( 'Post fight data recieved!' );
+    $( '#bw-'+ data.wid ).trigger( 'unit-post-fight', data );
+  } );
 
   w.network = function( wid ) {
     var obj = {
@@ -37,6 +45,7 @@
         socket.emit( 'add-unit', {
           wid:wid,
           unit: {
+            id: unit.id,
             name: unit.name,
             type: unit.type || 1,
           },
