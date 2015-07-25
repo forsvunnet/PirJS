@@ -12,7 +12,18 @@
           html += '<div class=info--squad-count title="Squad Count"></div>';
           html += '<div class=info--gold  title="Gold?"></div>';
         html += '</div>';
-        html += '<div class="mini-map"></div>';
+        html += '<div class="mini-map">';
+          html += '<div class="mm-player">';
+          for ( i = 0; i < 16; i++ ) {
+            html += '<div class="mm-unit-window mm-unit-window-'+ i +'"></div>';
+          }
+          html += '</div>';
+          html += '<div class="mm-opponent">';
+          for ( i = 0; i < 16; i++ ) {
+            html += '<div class="mm-unit-window mm-unit-window-'+ i +'"></div>';
+          }
+          html += '</div>';
+        html += '</div>';
         html += '<div class="bar-vertical bar--life" title="Life"><div class=filler></div></div>';
         html += '<div class="bar-vertical bar--mana" title="Mana"><div class=filler></div></div>';
         html += '<div class=bar--action-queue>';
@@ -28,9 +39,7 @@
         html += '</div>';
         html += '<div class=squad-manager>';
         for ( i = 0; i < 16; i++ ) {
-          html += '<div class="unit-window unit-window-'+ i +'">';
-
-          html += '</div>';
+          html += '<div class="unit-window unit-window-'+ i +'"></div>';
         }
         html += '</div>';
         html += '<div class=flee-button title="Flee Battle"></div>';
@@ -215,6 +224,7 @@
         e.preventDefault();
       };
 
+      // Broadcast units and insert them to the DOM
       for ( var i = 0; i < units.length; i++ ) {
         var unit = units[i];
 
@@ -222,13 +232,17 @@
         // Add the unit to the network
         _n.add_unit( unit, i );
         // Place the unit in the squad manager
-        bw.find( '.unit-window-'+ i ).append( unit.element );
+        bw.find( '.unit-window-'+ i + ', .mm-player .mm-unit-window-'+ i ).append( unit.element );
       }
 
 
       // Remember that units have to be id'ed on both pid and unit.id
       var unit_fight = function( e, data ) {
         var pid = data.pid;
+
+        var resolve_pid = function( _p ) {
+          return pid == _p ? 'player' : 'opponent';
+        };
 
         // We recieve all data for all players
         for ( var _p in data.actions ) {
@@ -252,9 +266,9 @@
               var action = unit_actions[_a];
 
 
-              var mini_target = bw.find( '.mini-map .player-'+ action[1].target_pid +' .unit-'+ action[1].target );
-              var mini_attacker = bw.find( '.mini-map .player-'+ _p +'.unit-'+ action[1].attacker );
-
+              var mm_target = bw.find( '.mini-map .mm-'+ resolve_pid( action[1].target_pid ) +' .unit-'+ action[1].target );
+              var mm_attacker = bw.find( '.mini-map .mm-'+ resolve_pid( _p ) +'.unit-'+ action[1].attacker );
+              //console.log ( mm_target );
               // Get the target unit and update its life
               for ( var i = 0; i < units.length; i++ ) {
                 // (this array itteration seems to be quicker than jQuery select?)
@@ -269,10 +283,24 @@
       };
       bw.on( 'unit-fight', unit_fight );
 
+
+      var opponent_units = [];
       var unit_added = function( e, data ) {
         console.log( data );
         // @TODO: Populate mini-map
+        var unit = spawn.unit( data.unit.name, data.unit.type );
+
+        // Keep track of the unit
+        opponent_units.push( unit );
+
+        // Calculate the position of the unit
+        var i = data.unit.y * 4 + data.unit.x;
+
+        // Place the unit in the DOM
+        bw.find( '.mm-opponent .mm-unit-window-'+ i ).append( unit.element );
+
       };
+      bw.on( 'unit-added', unit_added );
 
 
 
